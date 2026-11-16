@@ -3,6 +3,8 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const math = require('remark-math');
+const katex = require('rehype-katex');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -15,6 +17,16 @@ const config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/PowerfulFireworkWiki',
+
+  // KaTeX 样式自托管，不依赖 jsDelivr 之类的第三方 CDN
+  // 文件来自 node_modules/katex/dist（katex.min.css + fonts），已复制到 static/katex/
+  // 注意 href 要带上 baseUrl，这一项 Docusaurus 不会替你补
+  stylesheets: [
+    {
+      href: '/PowerfulFireworkWiki/katex/katex.min.css',
+      type: 'text/css',
+    },
+  ],
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -43,7 +55,9 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/',
           editUrl:
-            'https://github.com/jlxnb/PowerfulFireworkWiki/blob/main'
+            'https://github.com/jlxnb/PowerfulFireworkWiki/blob/main',
+          remarkPlugins: [math],
+          rehypePlugins: [katex],
         },
         blog: false,
         theme: {
